@@ -8,7 +8,6 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
 public class TransferPage {
-    // ОБЪЯВЛЕНИЕ ЭЛЕМЕНТОВ (добавьте эти строки)
     private SelenideElement amountField = $("[data-test-id=amount] input");
     private SelenideElement fromField = $("[data-test-id=from] input");
     private SelenideElement transferButton = $("[data-test-id=action-transfer]");
@@ -20,19 +19,14 @@ public class TransferPage {
         fromField.shouldBe(visible);
     }
 
-    public DashboardPage makeValidTransfer(String amount, DataHelper.CardInfo fromCard) {
-        amountField.setValue(amount);
-        fromField.setValue(fromCard.getCardNumber());
+    public DashboardPage makeTransfer(String amount, DataHelper.CardInfo fromCard) {
+        fillTransferForm(amount, fromCard);
         transferButton.click();
         return new DashboardPage();
     }
 
-
-    private void makeTransfer(String amount, DataHelper.CardInfo fromCard) {
+    private void fillTransferForm(String amount, DataHelper.CardInfo fromCard) {
         amountField.setValue(amount);
         fromField.setValue(fromCard.getCardNumber());
-        transferButton.click();
     }
-
-
 }

@@ -1,0 +1,1 @@
+[![Java CI with Gradle](https://github.com/littlemortalina/MoneyTransfer/actions/workflows/gradle.yml/badge.svg)](https://github.com/littlemortalina/MoneyTransfer/actions/workflows/gradle.yml)

@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MoneyTransferTest {
     @Test
-    void shouldTransferMoneyAndReturnBack() {
+    void shouldTransferMoneyFromFirrstTpSecondCard() {
         open("http://localhost:9999");
 
         var loginPage = new LoginPage();
@@ -20,22 +20,20 @@ class MoneyTransferTest {
         var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
         var dashboard = verificationPage.validVerify(verificationCode);
 
-        var initialBalance1 = dashboard.getFirstCardBalance(); // 10000
-        var initialBalance2 = dashboard.getSecondCardBalance(); // 10000
-        var amount = 500;
+        var initialBalance1 = dashboard.getFirstCardBalance();
+        var initialBalance2 = dashboard.getSecondCardBalance();
+        var amount = initialBalance2 / 2;
 
-        // Перевод с карты 1 на карту 2
         dashboard.selectCard(DataHelper.getSecondCardInfo())
-                .makeValidTransfer(String.valueOf(amount), DataHelper.getFirstCardInfo());
+                .makeTransfer(String.valueOf(amount), DataHelper.getFirstCardInfo());
 
-        // Проверяем балансы после первого перевода
-        assertEquals(initialBalance1 - amount, dashboard.getFirstCardBalance()); // 10000 - 500 = 9500
-        assertEquals(initialBalance2 + amount, dashboard.getSecondCardBalance()); // 10000 + 500 = 10500
+        assertEquals(initialBalance1 - amount, dashboard.getFirstCardBalance());
+        assertEquals(initialBalance2 + amount, dashboard.getSecondCardBalance());
 
     }
 
     @Test
-    void shouldTransferMoneyAndReturnBack2() {
+    void shouldTransferMoneyFromFirstToSecondCard() {
         open("http://localhost:9999");
 
         var loginPage = new LoginPage();
@@ -44,17 +42,14 @@ class MoneyTransferTest {
         var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
         var dashboard = verificationPage.validVerify(verificationCode);
 
-        var initialBalance1 = dashboard.getFirstCardBalance(); // 10000
-        var initialBalance2 = dashboard.getSecondCardBalance(); // 10000
-        var amount = 1000;
+        var initialBalance1 = dashboard.getFirstCardBalance();
+        var initialBalance2 = dashboard.getSecondCardBalance();
+        var amount = initialBalance1 / 2;
 
-        // Перевод с карты 1 на карту 2
         dashboard.selectCard(DataHelper.getFirstCardInfo())
-                .makeValidTransfer(String.valueOf(amount), DataHelper.getSecondCardInfo());
+                .makeTransfer(String.valueOf(amount), DataHelper.getSecondCardInfo());
 
-        // Проверяем балансы после первого перевода
-        assertEquals(initialBalance1 + amount, dashboard.getFirstCardBalance()); // 10000 - 500 = 9500
-        assertEquals(initialBalance2 - amount, dashboard.getSecondCardBalance()); // 10000 + 500 = 10500
-
+        assertEquals(initialBalance1 + amount, dashboard.getFirstCardBalance());
+        assertEquals(initialBalance2 - amount, dashboard.getSecondCardBalance());
     }
 }
