@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MoneyTransferTest {
     @Test
-    void shouldTransferMoneyFromFirrstTpSecondCard() {
+    void shouldTransferMoneyFromSecondToFirstCard() {
         open("http://localhost:9999");
 
         var loginPage = new LoginPage();
